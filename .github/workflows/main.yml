@@ -1,0 +1,23 @@
+name: build
+on:
+  workflow_dispatch: # allow triggering action manually
+permissions: {}
+jobs:
+  build:
+    runs-on: macos-latest-large
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+        lfs: 'true'
+
+    - name: Install castxml
+      run: brew install castxml
+
+    - name: Install Python 3.10 and 3.7
+      run: brew install python@3.10 python@3.7
+
+    - name: Run build script
+      run: ./build_os.sh
